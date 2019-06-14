@@ -94,6 +94,11 @@ cdef class Packet(Buffer):
 
         self._time_base = dst
 
+    def copy(self):
+        pkt = Packet()
+        err_check(lib.av_packet_ref(&pkt.struct, &self.struct))
+        return pkt
+
     def decode(self):
         """
         Send the packet's data to the decoder and return a list of
